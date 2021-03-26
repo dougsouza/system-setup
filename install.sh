@@ -27,13 +27,16 @@ apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012
 apt install -y git-annex
 # prepare dir for latex
 mkdir -p /usr/local/texlive
-exit # leave root user
 
 # ------- snap installs -------
-sudo snap install --classic code
-sudo snap install --classic slack
-sudo snap install spotify
-sudo snap install vlc
+snap install ffmpeg
+snap install htop
+snap install --classic code
+snap install --classic slack
+snap install spotify
+snap install vlc
+
+exit # leave root user
 
 # ------- manual installs -------
 # setup zsh
@@ -45,7 +48,7 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 
 # install Anaconda
 aria2c --max-connection-per-server 8 --dir ~/Downloads https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
-bash ~/Downloads/Anaconda3-2020.11-Linux-x86_64.sh -b -p $HOME/anaconda3
+sh ~/Downloads/Anaconda3-2020.11-Linux-x86_64.sh -b -p $HOME/anaconda3
 rm ~/Downloads/Anaconda3-2020.11-Linux-x86_64.sh
 ~/anaconda3/bin/conda init zsh
 
