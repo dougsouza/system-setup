@@ -27,6 +27,22 @@ apt install -y zsh
 echo $(which zsh) >> /etc/shells # add zsh to shell list
 chsh -s $(which zsh) # set zsh as default shell
 
+
+# ------- docker -------
+# clean house for docker
+apt remove -y docker docker-engine docker.io containerd runc
+# docket stuff
+apt install apt-transport-https ca-certificates  gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io
+groupadd docker
+usermod -aG docker $CURRENT_USER
+
 # ------- snap installs -------
 snap install ffmpeg
 snap install htop
@@ -54,8 +70,8 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 aria2c --max-connection-per-server 8 --dir ~/Downloads --out Anaconda3.sh https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
 sh ~/Downloads/Anaconda3.sh -b -p $HOME/anaconda3
 rm ~/Downloads/Anaconda3.sh
-~/anaconda3/bin/conda init
-~/anaconda3/bin/conda init zsh
+~/anaconda3/bin/conda init bash zsh
+~/anaconda3/bin/conda config --set changeps1 False # doesnt append env name to terminal
 
 # install latex
 
@@ -71,9 +87,6 @@ code --install-extension ms-toolsai.jupyter
 
 # ------- Other stuff -------
 # latest git-annex
-wget -O- http://neuro.debian.net/lists/focal.us-nh.libre | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9
-apt install -y git-annex
-
-
-
+# wget -O- http://neuro.debian.net/lists/focal.us-nh.libre | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+# apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9
+# apt install -y git-annex
